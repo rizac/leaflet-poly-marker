@@ -341,7 +341,7 @@ function createMarker_(type, latLng, size, map, options){
 
 L.polyMarker = {
 
-    // supported symbols (if not found, defaults to "o": circle marker):
+    // supported symbols (if not found, defaults to "o": circle marker) for Leaflet Polygons:
     symbols: {
         'd': undefined,
         "s": [45, 4],
@@ -353,13 +353,19 @@ L.polyMarker = {
         "v": [-90, 3],
         "<": [60, 3],
          ">": [0, 3],
-         "o": [22.5, 8]
+         "8": [22.5, 8]
     },
 
     new: function(type, latLng, size, map, options){
-        var [markerFunc, latlngs, options] = L.polyMarker._new(type, latLng, size, map, options);
+        if (!(type in L.polyMarker.symbols)){
+            // return CircleMarker (it does not need to be resized on zoom
+            // default to circle:
+            options.radius = size / 2.0;
+            return L.circleMarker(latLng, options);
+        }
+        var [latlngs, options] = L.polyMarker._newPolygon(type, latLng, size, map, options);
         options._polyMarkerArguments = [type, latLng, size];
-        marker = markerFunc(latlngs, options);
+        marker = L.polygon(latlngs, options);
         marker.on("add",function(event){
             L.polyMarker.startResizingPathOnZoomChanges(event.target, event.target._map);
         });
@@ -370,7 +376,7 @@ L.polyMarker = {
     },
 
 
-    _new: function(type, latLng, size, map, options){
+    _newPolygon: function(type, latLng, size, map, options){
         /* Create a marker of the given type. The marker will be created with L.Ploygon
          * because it is much more lightweighted than other options such  as SVGIcons. The
          * drawback is that the marker size must be resized on map zoom end
@@ -413,13 +419,8 @@ L.polyMarker = {
                 // get Polygon array of points (in lat/lon coordinates):
                 var latlngs = [[lat, lon-lonW], [lat+latH, lon], [lat, lon+lonW], [lat-latH, lon]];
                 marker = L.polygon(latlngs, options);
-                return [L.polygon, latlngs, options];
+                return [latlngs, options];
             }
-
-            // default to circle:
-            options.radius = size / 2.0;
-            return [L.circleMarker, latLng, options];
-
         }
 
         var [startAngle, numSides] = startAngleAndNumsides;
@@ -431,7 +432,7 @@ L.polyMarker = {
             var [x, y] = [radius*Math.cos(angle), radius*Math.sin(angle)];
             return map.layerPointToLatLng(new L.Point(pt.x+x, pt.y+y));
         });
-        return [L.polygon, latlngs, options];
+        return [latlngs, options];
 
         // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
         // Array form and simple object form (unless noted otherwise), so these lines are equivalent:
@@ -439,16 +440,16 @@ L.polyMarker = {
     },
 
     resizeAfterZoom: function(polyMarkers){
-        var _new = L.polyMarker._new;
+        var _new = L.polyMarker._newPolygon;
         polyMarkers.forEach(function(polyMarker){
             var map = polyMarker._map;
             if(map){
                 var args = (polyMarker.options || {})._polyMarkerArguments;
                 if (args){
                     var [type, latLng, size] = args;
-                    var [markerFunc, latlngs, options] = _new(type, latLng, size, map, {});
+                    var [latlngs, options] = _new(type, latLng, size, map, {});
                     polyMarker.setLatLngs(latlngs);
-                    polyMarker.setStyle(L.Util.extend(polyMarker.options, options));
+                    // polyMarker.setStyle(L.Util.extend(polyMarker.options, options));
                     // polyMarker.redraw();
                 }
             }
