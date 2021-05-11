@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet poly marker example</title>
+    <style>
+        /* just stretch body the whole viewport size, and put the map in the center:*/
+        body{
+            margin:0;
+            padding:0;
+            height: 100vh;
+            width: 100vw;
+        }
+        .parent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #map{
+            width: 50%;
+            height: 50%;
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+</head>
+
+<body class="parent">
+    <div id="map" style="background-color:yellow">
+
+    </div>
+</body>
+
+<script type="text/javascript">
+var map = L.map('map', {
+    zoom: 5,
+    //minZoom:9,
+    center: new L.latLng([50, 12]),
+    layers: [ // https://leaflet-extras.github.io/leaflet-providers/preview/
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }),
+    ]
+})
+</script>
+
+</html>
