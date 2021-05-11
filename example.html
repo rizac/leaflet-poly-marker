@@ -20,6 +20,12 @@
             width: 50%;
             height: 50%;
         }
+        .leaflet-div-icon{
+            margin: 0 !important;
+            padding: 0 !important;
+            /*border-width: 0 !important;*/
+            background-color: transparent !important;
+        }
     </style>
 
 
@@ -52,5 +58,40 @@ var map = L.map('map', {
     ]
 })
 </script>
+
+<script type="text/javascript" src="leafletpolymarker.js"></script>
+
+<script type="text/javascript">
+    var _symbols = [
+        "d",
+        "s",
+        "D",
+        "p",
+        "h",
+        "H",
+        "^",
+        "v",
+        "<",
+         ">",
+         "o",
+         null
+    ];
+
+    var step = 90;
+    var [lat, lon] = [50, 10];
+    var size = 25;
+    var allMarkers = [];
+    for(var key of _symbols){
+        var marker = L.polyMarker(key, [lat, lon], size, map, {weight:1}).addTo(map);
+        var myIcon = L.divIcon({html: `${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
+        L.marker([lat, lon], {icon: myIcon}).addTo(map);
+        // lon += 10;
+        lat -= 1;
+        allMarkers.push(marker);
+    }
+    new L.featureGroup(allMarkers).addTo(map);
+</script>
+
+
 
 </html>
