@@ -339,32 +339,10 @@ function createMarker_(type, latLng, size, map, options){
 }
 */
 
-L.polyMarker = function(type, latLng, size, map, options){
-	/* Create a marker of the given type. The marker will be created with L.Ploygon
-	 * because it is much more lightweighted than other options such  as SVGIcons. The
-	 * drawback is that the marker size must be resized on map zoom end
-	 * Parameters:
-	 * type: either '^', 'v', 'd', 's', 'c'
-	 * map the Leaflet map creaated with L.map(...)
-	 * latLng the marker coordinates, as a latLng object or an array of two elements
-	 *     (lat lon). The marker will be built with this coordinates as its center
-	 *     size: the marker size, in pts
-	 * options: an Object of options to be passed as second argument of L.polygon(...), e.g.:
-	 *     {fillOpacity: 1, color: "#333", fillColor:"rgb(255, 0, 120)", weight:1, zIndexOffset: 100}
-	 */
-	// (FYI on svg marker icon, see https://groups.google.com/forum/#!topic/leaflet-js/GSisdUm5rEc)
+L.polyMarker = {
 
-//    var defaultWeight = options['weight'] === undefined ? 3 : options['weight'];
-//    if (size > defaultWeight*2){
-//        size -= defaultWeight*2;
-//    }
-
-    // Initialize array of lat lng coordinates we are up to populate:
-    var latlngs = [];
-    // Get Layer coordinates in pts:
-    var pt = map.latLngToLayerPoint(latLng);
     // supported symbols (if not found, defaults to "o": circle marker):
-    var symbols = {
+    symbols: {
         'd': undefined,
         "s": [45, 4],
         "D": [0, 4],
@@ -376,63 +354,151 @@ L.polyMarker = function(type, latLng, size, map, options){
         "<": [60, 3],
          ">": [0, 3],
          "o": [22.5, 8]
-    };
-    var startAngleAndNumsides = symbols[type];
+    },
 
-    if (!startAngleAndNumsides){
-        if(type == 'd'){  // thin diamond:
-            if (Array.isArray(latLng)){
-                var [lat, lng] = latLng;
-            }else{
-                var [lat, lng] = [latLng.lat, latLng.lng];
+    new: function(type, latLng, size, map, options){
+        var [markerFunc, latlngs, options] = L.polyMarker._new(type, latLng, size, map, options);
+        options._polyMarkerArguments = [type, latLng, size];
+        marker = markerFunc(latlngs, options);
+        marker.on("add",function(event){
+            L.polyMarker.startResizingPathOnZoomChanges(event.target, event.target._map);
+        });
+        marker.on("remove",function(event){
+            L.polyMarker.stopResizingPathOnZoomChanges(event.target);
+        });
+        return marker;
+    },
+
+
+    _new: function(type, latLng, size, map, options){
+        /* Create a marker of the given type. The marker will be created with L.Ploygon
+         * because it is much more lightweighted than other options such  as SVGIcons. The
+         * drawback is that the marker size must be resized on map zoom end
+         * Parameters:
+         * type: either '^', 'v', 'd', 's', 'c'
+         * map the Leaflet map creaated with L.map(...)
+         * latLng the marker coordinates, as a latLng object or an array of two elements
+         *     (lat lon). The marker will be built with this coordinates as its center
+         *     size: the marker size, in pts
+         * options: an Object of options to be passed as second argument of L.polygon(...), e.g.:
+         *     {fillOpacity: 1, color: "#333", fillColor:"rgb(255, 0, 120)", weight:1, zIndexOffset: 100}
+         */
+        // (FYI on svg marker icon, see https://groups.google.com/forum/#!topic/leaflet-js/GSisdUm5rEc)
+
+    //    var defaultWeight = options['weight'] === undefined ? 3 : options['weight'];
+    //    if (size > defaultWeight*2){
+    //        size -= defaultWeight*2;
+    //    }
+        var symbols = L.polyMarker.symbols;
+        var marker = null;
+        // Initialize array of lat lng coordinates we are up to populate:
+        var latlngs = [];
+        // Get Layer coordinates in pts:
+        var pt = map.latLngToLayerPoint(latLng);
+
+        var startAngleAndNumsides = symbols[type];
+
+        if (!startAngleAndNumsides){
+            if(type == 'd'){  // thin diamond:
+                if (Array.isArray(latLng)){
+                    var [lat, lng] = latLng;
+                }else{
+                    var [lat, lng] = [latLng.lat, latLng.lng];
+                }
+                var sqrt2 = 1.4142135624;
+                var [w, h] = [sqrt2*size/4.0, sqrt2*size/2.0];  // height of a triangular equilateral
+                var latlng2 = map.layerPointToLatLng(new L.Point(pt.x+w, pt.y+h));
+                var lonW = Math.abs(latlng2.lng - lng);  // longitudinal width
+                var latH = Math.abs(latlng2.lat - lat);  // latitudinal height
+                // get Polygon array of points (in lat/lon coordinates):
+                var latlngs = [[lat, lon-lonW], [lat+latH, lon], [lat, lon+lonW], [lat-latH, lon]];
+                marker = L.polygon(latlngs, options);
+                return [L.polygon, latlngs, options];
             }
-            var sqrt2 = 1.4142135624;
-            var [w, h] = [sqrt2*size/4.0, sqrt2*size/2.0];  // height of a triangular equilateral
-            var latlng2 = map.layerPointToLatLng(new L.Point(pt.x+w, pt.y+h));
-            var lonW = Math.abs(latlng2.lng - lng);  // longitudinal width
-            var latH = Math.abs(latlng2.lat - lat);  // latitudinal height
-            // get Polygon array of points (in lat/lon coordinates):
-            var latlngs = [[lat, lon-lonW], [lat+latH, lon], [lat, lon+lonW], [lat-latH, lon]];
-            return L.polygon(latlngs, options);
-        }else{
+
             // default to circle:
             options.radius = size / 2.0;
-            return L.circleMarker(latLng, options);
+            return [L.circleMarker, latLng, options];
+
         }
-    }
 
-    var [startAngle, numSides] = startAngleAndNumsides;
-    startAngle = Math.PI * startAngle/180.0
-    var stepAngle = 2*Math.PI/numSides;  // 360.0/numSides;
-    var angles = new Array(numSides).fill(0).map((element, index) => index*stepAngle + startAngle);
-    var radius = size / 2.0;
-    var latlngs = angles.map(function(angle, index){
-        var [x, y] = [radius*Math.cos(angle), radius*Math.sin(angle)];
-        return map.layerPointToLatLng(new L.Point(pt.x+x, pt.y+y));
-    });
+        var [startAngle, numSides] = startAngleAndNumsides;
+        startAngle = Math.PI * startAngle/180.0
+        var stepAngle = 2*Math.PI/numSides;  // 360.0/numSides;
+        var angles = new Array(numSides).fill(0).map((element, index) => index*stepAngle + startAngle);
+        var radius = size / 2.0;
+        var latlngs = angles.map(function(angle, index){
+            var [x, y] = [radius*Math.cos(angle), radius*Math.sin(angle)];
+            return map.layerPointToLatLng(new L.Point(pt.x+x, pt.y+y));
+        });
+        return [L.polygon, latlngs, options];
 
-    // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
-    // Array form and simple object form (unless noted otherwise), so these lines are equivalent:
+        // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
+        // Array form and simple object form (unless noted otherwise), so these lines are equivalent:
 
-    return L.polygon(latlngs, options);
-}
-
-
-L.FSPolygon = L.Polygon.extend({
-
-
-    initialize: function(name, options) {
-        this.name = name;
-        L.setOptions(this, options);
-    }
-
-    addLayer: function (layer) {
-        L.LayerGroup.prototype.addLayer.call(this, layer);
     },
 
-    removeLayer: function (layer) {
-        L.LayerGroup.prototype.removeLayer.call(this, layer);
+    resizeAfterZoom: function(polyMarkers){
+        var _new = L.polyMarker._new;
+        polyMarkers.forEach(function(polyMarker){
+            var map = polyMarker._map;
+            if(map){
+                var args = (polyMarker.options || {})._polyMarkerArguments;
+                if (args){
+                    var [type, latLng, size] = args;
+                    var [markerFunc, latlngs, options] = _new(type, latLng, size, map, {});
+                    polyMarker.setLatLngs(latlngs);
+                    polyMarker.setStyle(L.Util.extend(polyMarker.options, options));
+                    // polyMarker.redraw();
+                }
+            }
+        });
     },
 
-    …
-});
+    startResizingPathOnZoomChanges: function(leafletPath, map){
+        var array = L.polyMarker._pathsToResizeOnZoom;
+        var startListening = array.length == 0;
+        if (startListening){
+            map.on("zoomend", L.polyMarker._resizeAfterZoom);
+        }
+        array.push(leafletPath);
+    },
+
+    stopResizingPathOnZoomChanges: function(leafletPath, map){
+        var array = L.polyMarker._pathsToResizeOnZoom;
+        var index = array.indexOf(marker);
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+        var stopListening = array.length === 0;
+        if (stopListening){
+            map.off("zoomend", L.polyMarker._resizeAfterZoom);
+        }
+    },
+
+    _resizeAfterZoom: function(event){
+        L.polyMarker.resizeAfterZoom(L.polyMarker._pathsToResizeOnZoom);
+    },
+
+    _pathsToResizeOnZoom: []
+};
+
+//L.FSPolygon = L.Polygon.extend({
+//
+//
+//    initialize: function(name, options) {
+//        this.name = name;
+//        L.setOptions(this, options);
+//
+//    }
+//
+//    addLayer: function (layer) {
+//        L.LayerGroup.prototype.addLayer.call(this, layer);
+//    },
+//
+//    removeLayer: function (layer) {
+//        L.LayerGroup.prototype.removeLayer.call(this, layer);
+//    },
+//
+//    …
+//});
