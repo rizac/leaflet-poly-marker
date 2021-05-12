@@ -1,9 +1,12 @@
 # leaflet-poly-marker
 
+(Disclaimer: This is not a Node.js module, but a small script intended to be included 
+easily in your HTML page with Leaflet)
+
 Polygonal Markers in Leaflet map:
 
 ```javascript
-    // include src:
+    // include src (use non-minified URL for debugging) or copy/paste the js code in your script tag
     <script type='text/javascript' src='https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js'>
     
     // add Markers in your code:
@@ -38,12 +41,4 @@ Features:
   - `h` hexagon1
   - `H` hexagon2
   - `D` diamond
-  - `d` thin_diamond (horizontal side halved) 
-
-
-*Note*: This is not a Node.js module, but a small script intended to be included easily in your
-web page with Leaflet by including 
-[this url](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js)
-(or the relative [uncompressed version](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.js) for debugging)
-in your &lt;script&gt; tag, as in the snippet above.
-
+  - `d` thin_diamond (horizontal side halved)
