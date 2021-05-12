@@ -8,9 +8,12 @@ Polygonal Markers in Leaflet map:
     // add Markers in your code:
     <script type='text/javascript'>
         // Given a map object, create a Square centered at [lat, lon] = [30, 40]:
-        var pmarker = L.polyMarker([30, 40], 's', {width:1}).addTo(map);
-        // you can also supply the marker in the options object (here draw a Pentagon):
-        var marker = L.polyMarker([30, 40], {marker: 'p', width:1}).addTo(map);
+        // With the same constructor as CircleMarker (with 'marker' property instead of 'radius'):
+        var pmarker = L.polyMarker([30, 40], {marker: 'p', ...}).addTo(map);
+        // Supplying marker as second argument between `[lat, lon]` and `options`:
+        var pmarker = L.polyMarker([30, 40], 's', {...}).addTo(map);
+        // Polygon with arbotrary number of elements (marker input as integer). E.g., a Dodecagon (12 sides):
+        var pmarker = L.polyMarker([30, 40], {marker: 12, ...}).addTo(map);
     </script>
 ```
 
