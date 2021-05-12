@@ -13,14 +13,13 @@ Polygonal Markers in Leaflet map:
     // add Markers in your code:
     <script type='text/javascript'>
         // Given a map object, create a Pentagon ('p') centered at [lat, lon] = [30, 40]
-        // with a similar constructor as CircleMarker(latLng, options):
+        // The constructor is similar as CircleMarker(latLng, options):
         var pmarker = L.polyMarker([30, 40], {marker: 'p', ...}).addTo(map);
         
-        // You can also supplying the marker as second argument (will be merged in
-        // options). Here we create a square ('s'):
-        var pmarker = L.polyMarker([30, 40], 's', {...}).addTo(map);
+        // You can also supply the marker as second argument (will be merged in options):
+        var pmarker = L.polyMarker([30, 40], 'p', {...}).addTo(map);
          
-        // Then the marker is given as integer N it creates a Polygon with N sides.
+        // When the marker is numeric (integer), it defines the Polygon sides.
         // E.g., to draw a Dodecagon (12 sides):
         var pmarker = L.polyMarker([30, 40], {marker: 12, ...}).addTo(map);
     </script>
