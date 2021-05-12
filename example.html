@@ -82,16 +82,22 @@ var map = L.map('map', {
     var size = 25;
     var allMarkers = [];
     for(var key of _symbols){
-        var marker = L.polyMarker.new(key, [lat, lon], size, map, {weight:1}).addTo(map);
+        // var marker = L.polyMarker.new(key, [lat, lon], size, map, {weight:1}).addTo(map);
         var myIcon = L.divIcon({html: `${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
         L.marker([lat, lon], {icon: myIcon}).addTo(map);
 
-        new L.FSPolygon([lat, lon], {type: key, weight: 1}).addTo(map);
+
+        if (key!= null){
+            allMarkers.push(new L.FSPolygon([lat, lon], {type: key, weight: 1}));
+        }
+
         // lon += 10;
         lat -= 1;
-        allMarkers.push(marker);
+        //allMarkers.push(marker);
     }
     new L.featureGroup(allMarkers).addTo(map);
+    new L.CircleMarker([lat, lon], {icon: myIcon}).addTo(map);
+
 </script>
 
 
