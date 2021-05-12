@@ -39,7 +39,7 @@
 </head>
 
 <body class="parent">
-    <div id="map" style="background-color:yellow">
+    <div id="map">
 
     </div>
 </body>
@@ -49,7 +49,7 @@ var map = L.map('map', {
     zoom: 5,
     //minZoom:9,
     center: new L.latLng([50, 12]),
-    layers: [ // https://leaflet-extras.github.io/leaflet-providers/preview/
+    layers: [ // FOR INFO, SEE: https://leaflet-extras.github.io/leaflet-providers/preview/
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
