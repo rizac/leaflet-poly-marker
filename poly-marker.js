@@ -89,3 +89,8 @@ L.PolyMarker = L.Polygon.extend({
         return latlngs;
 	}
 });
+
+// factory function (https://leafletjs.com/examples/extending/extending-1-classes.html#factories)
+L.polyMarker = function(latlng, ...options){
+    return new L.PolyMarker(latlng, ...options);
+}

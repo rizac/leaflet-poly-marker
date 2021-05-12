@@ -70,7 +70,7 @@ var map = L.map('map', {
 
         var myIcon = L.divIcon({html: `marker: ${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
         L.marker([lat, lon+1], {icon: myIcon}).addTo(map);
-        allMarkers.push(new L.PolyMarker([lat, lon], {marker: key, weight: 1}));
+        allMarkers.push(new L.polyMarker([lat, lon], {marker: key, weight: 1}));
         // lon += 10;
         lat -= 1;
         //allMarkers.push(marker);
