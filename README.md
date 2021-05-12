@@ -5,7 +5,7 @@ easily in your HTML page with Leaflet)
 
 Polygonal Markers in Leaflet map:
 
-```javascript
+```html
     // include src (use non-minified URL for debugging) 
     // or copy/paste the js code in your script tag
     <script type='text/javascript' src='https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js'>
