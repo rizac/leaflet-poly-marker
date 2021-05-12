@@ -1,15 +1,13 @@
 L.PolyMarker = L.Polygon.extend({
 
-    // @section
-	// @aka CircleMarker options
+    // PolyMarker options
 	options: {
-		type: '^',
+	    // The marker symbol. Defaults to 's' (square)
+		marker: 's',
 
-		// @option radius: Number = 10
-		// Radius of the circle marker, in pixels
+		// @option radius: Number = 10, in pixels. Radius of the circle circumscribing
+		// the polygon, basically the smallest circle enclosing the whole polygon
 		radius: 10,
-
-		side: null,
 	},
 
 	markers: {  // defined in the __proto__ (so shared across instances and not created each time). Same for options above
@@ -29,12 +27,12 @@ L.PolyMarker = L.Polygon.extend({
 	initialize: function(latlng, ...options) {
 	    if (options.length == 2){
 	        var [type, options] = options;
-	        options.type = type;
+	        options.marker = type;
 	    }else{
 	        options = options[0];
 	    }
-	    if (!(options.type in this.markers)){
-	        options.type = 's';
+	    if (!(options.marker in this.markers)){
+	        options.marker = this.options.marker;
 	    }
 		L.Util.setOptions(this, options);  // merge options defined in __proto__ with this instance options
 		L.Polygon.prototype.initialize.call(this, [], options)
@@ -69,8 +67,8 @@ L.PolyMarker = L.Polygon.extend({
 	computeLatLngs: function(map){
 	    // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
         // Array form and simple object form (unless noted otherwise)
-        var type = this.options.type;
-        var [startAngle, numSides] = this.markers[type];
+        var marker = this.options.marker;
+        var [startAngle, numSides] = this.markers[marker];
         var [PI, cos, sin, abs] = [Math.PI, Math.cos, Math.sin, Math.abs];
         startAngle = PI * startAngle / 180.0  // convert to radians
         var stepAngle = 2*PI / numSides;  // in radians
@@ -82,8 +80,8 @@ L.PolyMarker = L.Polygon.extend({
             var [x, y] = [radius*cos(angle), radius*sin(angle)];
             return map.layerPointToLatLng(new L.Point(center.x + x, center.y + y));
         });
-        // post process for specific types:
-        if(type == 'd'){  // thin diamond, shrink horizontal side
+        // post process for specific markers:
+        if(marker == 'd'){  // thin diamond, shrink horizontal side
             var w = abs(latlngs[0].lng - latlngs[2].lng) / 4.0;
             latlngs[0].lng -= w;
             latlngs[2].lng += w;

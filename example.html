@@ -59,38 +59,18 @@ var map = L.map('map', {
 })
 </script>
 
-<script type="text/javascript" src="leafletpolymarker.js"></script>
+<script type="text/javascript" src="PolyMarker.js"></script>
 
 <script type="text/javascript">
-    var _symbols = [
-        "d",
-        "s",
-        "D",
-        "p",
-        "h",
-        "H",
-        "^",
-        "v",
-        "<",
-         ">",
-         "8",
-         null
-    ];
-
     var step = 90;
     var [lat, lon] = [50, 10];
     var size = 25;
     var allMarkers = [];
-    for(var key of _symbols){
-        // var marker = L.polyMarker.new(key, [lat, lon], size, map, {weight:1}).addTo(map);
-        var myIcon = L.divIcon({html: `${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
-        L.marker([lat, lon], {icon: myIcon}).addTo(map);
+    for(var key of Object.keys(L.PolyMarker.prototype.markers)){
 
-
-        if (key!= null){
-            allMarkers.push(new L.PolygonMarker([lat, lon], {type: key, weight: 1}));
-        }
-
+        var myIcon = L.divIcon({html: `marker: ${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
+        L.marker([lat, lon+1], {icon: myIcon}).addTo(map);
+        allMarkers.push(new L.PolyMarker([lat, lon], {marker: key, weight: 1}));
         // lon += 10;
         lat -= 1;
         //allMarkers.push(marker);
