@@ -23,8 +23,8 @@ Polygonal Markers in Leaflet map:
 # Install
 
 This is a small snippet of code intended to be included easily in your web page.
-Just copy the minified version or use as src in your module the Github URL of
-the raw file.
+Just copy the minified version or use as src in your module the [Github URL of
+the raw file](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/PolyMarker.js) 
 
 # Usage
 
