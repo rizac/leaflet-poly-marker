@@ -4,7 +4,6 @@ L.PolyMarker = L.Polygon.extend({
 	options: {
 	    // The marker symbol. Defaults to 's' (square)
 		marker: 's',
-
 		// @option radius: Number = 10, in pixels. Radius of the circle circumscribing
 		// the polygon, basically the smallest circle enclosing the whole polygon
 		radius: 10,
@@ -41,11 +40,6 @@ L.PolyMarker = L.Polygon.extend({
     	}
     	this._latlng = latlng;
 	},
-
-//    beforeAdd: function (map) {
-//        this._mapZoom = null;
-//        L.Polygon.prototype.beforeAdd.call(this, map);
-//	},
 
     onRemove: function () {
         delete this._mapZoom;
