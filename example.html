@@ -85,6 +85,8 @@ var map = L.map('map', {
         var marker = L.polyMarker.new(key, [lat, lon], size, map, {weight:1}).addTo(map);
         var myIcon = L.divIcon({html: `${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
         L.marker([lat, lon], {icon: myIcon}).addTo(map);
+
+        new L.FSPolygon([lat, lon], {type: key, weight: 1}).addTo(map);
         // lon += 10;
         lat -= 1;
         allMarkers.push(marker);
