@@ -45,4 +45,5 @@ Features:
   - `H` hexagon2
   - `D` diamond
   - `d` thin_diamond (horizontal side halved)
+  
   (when the marker is given as integer, it defines the numner of sides of the Polygon)
