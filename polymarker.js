@@ -1,15 +1,15 @@
 L.PolyMarker = L.Polygon.extend({
 
     // PolyMarker options
-	options: {
+    options: {
 	    // The marker symbol. Defaults to 's' (square)
 		marker: 's',
 		// @option radius: Number = 10, in pixels. Radius of the circle circumscribing
 		// the polygon, basically the smallest circle enclosing the whole polygon
 		radius: 10,
-	},
+    },
 
-	markers: {  // defined in the __proto__ (so shared across instances and not created each time). Same for options above
+    markers: {  // defined in the __proto__ (so shared across instances and not created each time). Same for options above
         "s": [45, 4],
         "d": [0, 4],
         "D": [0, 4],
@@ -23,8 +23,8 @@ L.PolyMarker = L.Polygon.extend({
         "8": [22.5, 8]
     },
 
-	initialize: function(latlng, ...options) {
-	    if (options.length == 2){
+    initialize: function(latlng, ...options) {
+        if (options.length == 2){
 	        var [marker, options] = options;
 	        options.marker = marker;
 	    }else{
