@@ -70,7 +70,7 @@ L.PolyMarker = L.Polygon.extend({
         startAngle = PI * startAngle / 180.0  // convert to radians
         var stepAngle = 2*PI / numSides;  // in radians
         var angles = new Array(numSides).fill(0).map((element, index) => index*stepAngle + startAngle);
-        var radius = size / 2.0;
+        var radius = this.options.radius;
         var latLng = this._latlng;
         var center = map.latLngToLayerPoint(latLng);  // center of shape in Pt units
         var latlngs = angles.map(function(angle, index){
