@@ -1,4 +1,4 @@
-# leaflet_poly_marker
+# leaflet-poly-marker
 
 Polygonal Markers in Leaflet map:
 

@@ -1,4 +1,4 @@
-L.PolygonMarker = L.Polygon.extend({
+L.PolyMarker = L.Polygon.extend({
 
     // @section
 	// @aka CircleMarker options
