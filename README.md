@@ -42,8 +42,9 @@ Features:
 
 # Install
 
-This is a small snippet of code intended to be included easily in your web page.
-Just copy the file content 9for debugging), the minified version, or use as `src`
-in your module the [Github URL of the raw file](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js) 
+This is not a Node.js module, but a small script intended to be included easily in your
+web page with Leaflet. Therefore, just copy the file content (for debugging),
+the minified version, or use as `src` in your module 
+the [Github URL of the minified file](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js) 
 
 
