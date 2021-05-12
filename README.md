@@ -31,7 +31,7 @@ Polygonal Markers in Leaflet map:
 Features:
 
 - Behaves as CircleMarker: Give a center in `[lat lon]` coordinates and a size in
-  pixel and the marker will be zoom independent, i.e. it will not expand/shrink 
+  pixel and the marker will be zoom independent, i.e. it will **not** expand/shrink 
   while zooming in/out.
 - Relatively lightweight (when compared to e.g., DivIcon)
 - Easy Polygon definition with no maths: just provide a single character marker (as in Python's
