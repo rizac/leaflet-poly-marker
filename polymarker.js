@@ -31,7 +31,7 @@ L.PolyMarker = L.Polygon.extend({
             options = options[0];
         }
         L.Util.setOptions(this, options);  // merge options defined in __proto__ with this instance options
-        L.Polygon.prototype.initialize.call(this, [], options)
+        L.Polygon.prototype.initialize.call(this, [], options);
         if (Array.isArray(latlng)){
             latlng = L.latLng(latlng[0], latlng[1]);
         }
@@ -70,9 +70,9 @@ L.PolyMarker = L.Polygon.extend({
         startAngle = PI * startAngle / 180.0  // convert to radians
         var stepAngle = 2*PI / numSides;  // in radians
         var angles = new Array(numSides).fill(0).map((element, index) => index*stepAngle + startAngle);
-        var radius = this.options.radius;
         var latLng = this._latlng;
         var center = map.latLngToLayerPoint(latLng);  // center of shape in Pt units
+        var radius = this.options.radius;
         var latlngs = angles.map(function(angle, index){
             var [x, y] = [radius*cos(angle), radius*sin(angle)];
             return map.layerPointToLatLng(new L.Point(center.x + x, center.y - y));

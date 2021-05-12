@@ -62,22 +62,20 @@ var map = L.map('map', {
 <script type="text/javascript" src="polymarker.js"></script>
 
 <script type="text/javascript">
-    var step = 90;
-    var [lat, lon] = [-50, 10];
-    var size = 50;
-    var allMarkers = [];
-    for(var key of Object.keys(L.PolyMarker.prototype.markers).concat([10, '180'])){
-
-        var myIcon = L.divIcon({html: `marker: ${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
-        L.marker([lat, lon+1], {icon: myIcon}).addTo(map);
-        allMarkers.push(new L.polyMarker([lat, lon], {marker: key, weight: 1}));
-        // lon += 10;
-        lat -= 1;
-        //allMarkers.push(marker);
+    function randomLngLat(){
+        return [Math.random() * 150 - 75, Math.random() * 300 - 150]
     }
-    new L.featureGroup(allMarkers).addTo(map);
-    new L.CircleMarker([lat, lon], {icon: myIcon}).addTo(map);
-
+    // show all available markers, plus two custom polygons with 10 and 180 sides
+    var markers = Object.keys(L.PolyMarker.prototype.markers).concat([10, '180']);
+    var allPolyMarkers = [];
+    for(var marker of markers){
+        var polyMarker = L.polyMarker(randomLngLat(), {marker: marker}).bindPopup( `marker: ${marker}`);
+        allPolyMarkers.push(polyMarker);
+    }
+    L.circleMarker(randomLngLat()).addTo(map);
+    var featGroup = new L.featureGroup(allPolyMarkers).addTo(map);
+    // zoom map to specified markers:
+    map.fitBounds(featGroup.getBounds());
 </script>
 
 
