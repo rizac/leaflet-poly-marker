@@ -88,7 +88,7 @@ var map = L.map('map', {
 
 
         if (key!= null){
-            allMarkers.push(new L.FSPolygon([lat, lon], {type: key, weight: 1}));
+            allMarkers.push(new L.PolygonMarker([lat, lon], {type: key, weight: 1}));
         }
 
         // lon += 10;
