@@ -40,10 +40,10 @@ Features:
   - `D` diamond
   - `d` thin_diamond (horizontal side halved) 
 
-# Install
 
-This is not a Node.js module, but a small script intended to be included easily in your
-web page with Leaflet. You can simply copy the raw file or include 
-[this url](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.js)
-(or the relative minified version) in your &lt;script&gt; tag.
+*Note*: This is not a Node.js module, but a small script intended to be included easily in your
+web page with Leaflet by including 
+[this url](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js)
+(or the relative [uncompressed version](https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.js) for debugging)
+in your &lt;script&gt; tag, as in the snippet above.
 
