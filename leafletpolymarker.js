@@ -127,7 +127,21 @@ L.FSPolygon = L.Polygon.extend({
 		side: null,
 	},
 
-	initialize: function (latlng, ...options) {
+	markers: {  // defined in the __proto__ (soo shared across instances and not created each time). Same for options above
+        "s": [45, 4],
+        "d": [0, 4],
+        "D": [0, 4],
+        "p": [18, 5],
+        "h": [30, 6],
+        "H": [0, 6],
+        "^": [-30, 3],
+        "v": [-90, 3],
+        "<": [60, 3],
+        ">": [0, 3],
+        "8": [22.5, 8]
+    },
+
+	initialize: function(latlng, ...options) {
 	    if (options.length == 2){
 	        var [type, options] = options;
 	        options.type = type;
@@ -135,6 +149,10 @@ L.FSPolygon = L.Polygon.extend({
 	        options = options[0];
 	    }
 		L.Util.setOptions(this, options);  // merge
+        if (!(options.type in this.markers)){
+            options.type = this.__proto__.options.type;
+            // throw `Invalid marker: ${options.type}`;
+        }
 		L.Polygon.prototype.initialize.call(this, [], options)
 		if (Array.isArray(latlng)){
     		latlng = L.latLng(latlng[0], latlng[1]);
@@ -202,16 +220,16 @@ L.FSPolygon = L.Polygon.extend({
 //    }
 });
 
-L.FSPolygon.prototype.markers = {
-    "s": [45, 4],
-    "d": [0, 4],
-    "D": [0, 4],
-    "p": [18, 5],
-    "h": [30, 6],
-    "H": [0, 6],
-    "^": [-30, 3],
-    "v": [-90, 3],
-    "<": [60, 3],
-    ">": [0, 3],
-    "8": [22.5, 8]
-};
+//L.FSPolygon.prototype.markers = {
+//    "s": [45, 4],
+//    "d": [0, 4],
+//    "D": [0, 4],
+//    "p": [18, 5],
+//    "h": [30, 6],
+//    "H": [0, 6],
+//    "^": [-30, 3],
+//    "v": [-90, 3],
+//    "<": [60, 3],
+//    ">": [0, 3],
+//    "8": [22.5, 8]
+//};
