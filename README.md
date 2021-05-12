@@ -12,8 +12,11 @@ Polygonal Markers in Leaflet map:
     
     // add Markers in your code:
     <script type='text/javascript'>
-        // Given a map object, create a Pentagon ('p') centered at [lat, lon] = [30, 40]
-        // The constructor is similar as CircleMarker(latLng, options):
+        // Given a map object:
+        var map = L.map(...);
+
+        // Create a Pentagon ('p') centered at [lat, lon] = [30, 40]
+        // The constructor is similar to CircleMarker(latLng, options):
         var pmarker = L.polyMarker([30, 40], {marker: 'p', ...}).addTo(map);
         
         // You can also supply the marker as second argument (will be merged in options):
