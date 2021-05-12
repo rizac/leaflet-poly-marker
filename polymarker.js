@@ -2,11 +2,11 @@ L.PolyMarker = L.Polygon.extend({
 
     // PolyMarker options
     options: {
-	    // The marker symbol. Defaults to 's' (square)
-		marker: 's',
-		// @option radius: Number = 10, in pixels. Radius of the circle circumscribing
-		// the polygon, basically the smallest circle enclosing the whole polygon
-		radius: 10,
+        // The marker symbol. Defaults to 's' (square)
+        marker: 's',
+        // @option radius: Number = 10, in pixels. Radius of the circle circumscribing
+        // the polygon, basically the smallest circle enclosing the whole polygon
+        radius: 10,
     },
 
     markers: {  // defined in the __proto__ (so shared across instances and not created each time). Same for options above
@@ -25,38 +25,38 @@ L.PolyMarker = L.Polygon.extend({
 
     initialize: function(latlng, ...options) {
         if (options.length == 2){
-	        var [marker, options] = options;
-	        options.marker = marker;
-	    }else{
-	        options = options[0];
-	    }
-		L.Util.setOptions(this, options);  // merge options defined in __proto__ with this instance options
-		L.Polygon.prototype.initialize.call(this, [], options)
-		if (Array.isArray(latlng)){
-    		latlng = L.latLng(latlng[0], latlng[1]);
-    	}
-    	this._latlng = latlng;
-	},
+            var [marker, options] = options;
+            options.marker = marker;
+        }else{
+            options = options[0];
+        }
+        L.Util.setOptions(this, options);  // merge options defined in __proto__ with this instance options
+        L.Polygon.prototype.initialize.call(this, [], options)
+        if (Array.isArray(latlng)){
+            latlng = L.latLng(latlng[0], latlng[1]);
+        }
+        this._latlng = latlng;
+    },
 
     onRemove: function () {
         delete this._mapZoom;
-		L.Polygon.prototype.onRemove.call(this);
-	},
+        L.Polygon.prototype.onRemove.call(this);
+    },
 
     getCenter: function () {  // Overrides getCenter as we do not need to calculate it here
         return this._latlng;
     },
 
     _project: function () {   // This is called when map is zoomed ('zoomend'). See Renderer._onZoomEnd
-		if (this._map && this._map.getZoom() !== this._mapZoom) {
-		    this._mapZoom = this._map.getZoom();
-    		this._setLatLngs(this.computeLatLngs(this._map));
-    	}
-		L.Polygon.prototype._project.call(this);
-	},
+        if (this._map && this._map.getZoom() !== this._mapZoom) {
+            this._mapZoom = this._map.getZoom();
+            this._setLatLngs(this.computeLatLngs(this._map));
+        }
+        L.Polygon.prototype._project.call(this);
+    },
 
-	computeLatLngs: function(map){
-	    // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
+    computeLatLngs: function(map){
+        // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
         // Array form and simple object form (unless noted otherwise)
         var marker = this.options.marker;
         if (marker in this.markers){
@@ -84,7 +84,7 @@ L.PolyMarker = L.Polygon.extend({
             latlngs[2].lng += w;
         }
         return latlngs;
-	}
+    }
 });
 
 // factory function (https://leafletjs.com/examples/extending/extending-1-classes.html#factories)
