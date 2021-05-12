@@ -25,13 +25,10 @@ L.PolyMarker = L.Polygon.extend({
 
 	initialize: function(latlng, ...options) {
 	    if (options.length == 2){
-	        var [type, options] = options;
-	        options.marker = type;
+	        var [marker, options] = options;
+	        options.marker = marker;
 	    }else{
 	        options = options[0];
-	    }
-	    if (!(options.marker in this.markers)){
-	        options.marker = this.options.marker;
 	    }
 		L.Util.setOptions(this, options);  // merge options defined in __proto__ with this instance options
 		L.Polygon.prototype.initialize.call(this, [], options)
@@ -62,7 +59,13 @@ L.PolyMarker = L.Polygon.extend({
 	    // Note: All Leaflet methods that accept LatLng objects also accept them in a simple
         // Array form and simple object form (unless noted otherwise)
         var marker = this.options.marker;
-        var [startAngle, numSides] = this.markers[marker];
+        if (marker in this.markers){
+            var [startAngle, numSides] = this.markers[marker];
+        }else if (parseInt(marker) == marker){  // marker is int or int-string, e.g. 15, '28'?
+            var [startAngle, numSides] = [0, parseInt(marker)];
+        }else{
+            return [];  // Array of zero points
+        }
         var [PI, cos, sin, abs] = [Math.PI, Math.cos, Math.sin, Math.abs];
         startAngle = PI * startAngle / 180.0  // convert to radians
         var stepAngle = 2*PI / numSides;  // in radians
@@ -72,7 +75,7 @@ L.PolyMarker = L.Polygon.extend({
         var center = map.latLngToLayerPoint(latLng);  // center of shape in Pt units
         var latlngs = angles.map(function(angle, index){
             var [x, y] = [radius*cos(angle), radius*sin(angle)];
-            return map.layerPointToLatLng(new L.Point(center.x + x, center.y + y));
+            return map.layerPointToLatLng(new L.Point(center.x + x, center.y - y));
         });
         // post process for specific markers:
         if(marker == 'd'){  // thin diamond, shrink horizontal side

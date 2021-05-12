@@ -59,14 +59,14 @@ var map = L.map('map', {
 })
 </script>
 
-<script type="text/javascript" src="polymarker.min.js"></script>
+<script type="text/javascript" src="polymarker.js"></script>
 
 <script type="text/javascript">
     var step = 90;
-    var [lat, lon] = [50, 10];
-    var size = 25;
+    var [lat, lon] = [-50, 10];
+    var size = 50;
     var allMarkers = [];
-    for(var key of Object.keys(L.PolyMarker.prototype.markers)){
+    for(var key of Object.keys(L.PolyMarker.prototype.markers).concat([10, '180'])){
 
         var myIcon = L.divIcon({html: `marker: ${key}`, iconSize: size, iconAnchor: [-size/2, -size/2]});
         L.marker([lat, lon+1], {icon: myIcon}).addTo(map);
