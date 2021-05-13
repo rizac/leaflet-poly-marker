@@ -8,6 +8,8 @@ easily in your HTML page together with [Leaflet](https://leafletjs.com/):
 ```javascript
 <script type='text/javascript' src='https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js'>
 ```
+(See the [example.html file](https://github.com/rizac/leaflet-poly-marker/blob/main/example.html)
+for details) 
 
 ## Examples
 
