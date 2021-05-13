@@ -1,6 +1,7 @@
 # leaflet-poly-marker
 
-Polygonal Markers in Leaflet map
+Polygonal Markers in Leaflet map <img align="right" width="40%" src='example-map.png'>
+
 
 Disclaimer: This is not a Node.js module, but a small script intended to be copy/pasted in your code or included 
 easily in your HTML page together with [Leaflet](https://leafletjs.com/):
@@ -42,7 +43,7 @@ var pmarker = L.polyMarker([30, 40], {marker: 12, ...}).addTo(map);
   - `>` triangle_right
   - `8` octagon
   - `p` pentagon
-  - `h` hexagon1
-  - `H` hexagon2
+  - `h` hexagon1 (left and right sides aligned vertically)
+  - `H` hexagon2  (top and bottom sides aligned horizontally)
   - `D` diamond
-  - `d` thin_diamond (horizontal side halved)
+  - `d` thin_diamond (shrinked horizontally: width 50% of its height)
