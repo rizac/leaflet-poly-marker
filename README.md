@@ -15,8 +15,8 @@ easily in your HTML page together with [Leaflet](https://leafletjs.com/):
 // Given a Leaflet map object:
 var map = L.map(...);
 
-// Create a Pentagon ('p') centered at [lat, lon] = [30, 40]. with size in pixel
-// given as the `radius`of the enclosing circle (default when missing: 10 pixels)
+// Create a Pentagon ('p') centered at [lat, lon] = [30, 40] with size in pixels
+// given as the `radius`of the enclosing circle (When missing, radius defaults to 10)
 var pmarker = L.polyMarker([30, 40], {marker: 'p', radius: 10, ...}).addTo(map);
         
 // You can also supply the marker as second argument.
