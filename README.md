@@ -35,7 +35,7 @@ var pmarker = L.polyMarker([30, 40], {marker: 12, ...}).addTo(map);
   (given in the Object passed as last argument) are the same as in Polygion, with the addition of `marker` and `radius` 
 - Can be manipulated as all Leaflet objects and is relatively lightweight when compared to alternative solutions (e.g., DivIcon)
 - Easy Polygon definition with no maths: just provide a single character marker (as in Python's
-  Matplotlib) to draw the desired Polygon around its center (or an integer to define the polygon sides):
+  [Matplotlib](https://matplotlib.org/stable/api/markers_api.html)) to draw the desired Polygon around its center (or an integer to define the polygon sides):
   - `s` square
   - `v` triangle_down
   - `^` triangle_up
