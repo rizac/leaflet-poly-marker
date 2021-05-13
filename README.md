@@ -34,9 +34,9 @@ var pmarker = L.polyMarker([30, 40], {marker: 12, ...}).addTo(map);
 ## Features
 
 - PolyMarker is a leaflet [Polygon](https://leafletjs.com/reference-1.7.1.html#polygon) but behaves as a [CircleMarker](https://leafletjs.com/reference-1.7.1.html#circlemarker): given a center in `[lat lon]` coordinates the Polygon will be drawn around it
-  and will **preserve its size in pixel, i.e. it will not expand or shrink while zooming in or out**. Regardless of this, all PolyMarker options
-  (given in the Object passed as last argument) are the same as in Polygion, with the addition of `marker` and `radius` 
-- Can be manipulated as all Leaflet objects and is relatively lightweight when compared to alternative solutions (e.g., DivIcon)
+  and will **preserve its size in pixel, i.e. it will not expand or shrink while zooming in or out**. Regardless of this, PolyMarker can be customized
+  as any leaflet Polygon (see last argument of `l.polyMarker`) with the addition of the `marker` and `radius` properties 
+- Can be manipulated as all Leaflet object (e.g., bind popup, click events) and is relatively lightweight when compared to alternative solutions (e.g., DivIcon)
 - Easy Polygon definition with no maths: just provide a single character marker (as in Python's
   [Matplotlib](https://matplotlib.org/stable/api/markers_api.html)) to draw the desired Polygon around its center (or an integer to define the polygon sides):
   - `s` square
