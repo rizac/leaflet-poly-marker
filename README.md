@@ -1,14 +1,15 @@
 # leaflet-poly-marker
 
-Polygonal Markers in Leaflet map <img align="right" width="45%" src='example-map.png'>
+Polygonal Markers in Leaflet map <img align="right" width="50%" src='example-map.png'>
 
 
 Disclaimer: This is not a Node.js module, but a small script intended to be copy/pasted in your code or included 
 easily in your HTML page together with [Leaflet](https://leafletjs.com/):
 ```javascript
-<script type='text/javascript' src='https://raw.githubusercontent.com/rizac/leaflet-poly-marker/main/polymarker.min.js'>
+<script type='text/javascript' src='https://cdn.jsdelivr.net/gh/rizac/leaflet-poly-marker/polymarker.min.js'>
 ```
-(See the [example.html file](https://github.com/rizac/leaflet-poly-marker/blob/main/example.html)
+(For generating the `src` URL above, see [here](https://stackoverflow.com/a/18049842). See also the
+[example.html file](https://github.com/rizac/leaflet-poly-marker/blob/main/example.html)
 for details) 
 
 ## Examples
