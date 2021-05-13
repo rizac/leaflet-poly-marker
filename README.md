@@ -17,10 +17,10 @@ var map = L.map(...);
 
 // Create a Pentagon ('p') centered at [lat, lon] = [30, 40] with size in pixels
 // given as the `radius`of the enclosing circle (When missing, radius defaults to 10)
-var pmarker = L.polyMarker([30, 40], {marker: 'p', radius: 10, ...}).addTo(map);
+var pmarker = L.polyMarker([30, 40], {marker: 'p', radius: 15, ...}).addTo(map);
         
-// You can also supply the marker as second argument.
-// A missing marker defaults to 's' (square Polygon)
+// You can also create PolyMarkers with thrre arguments, supplying the marker separately
+// as second argument (a missing marker will default to 's': square Polygon)
 var pmarker = L.polyMarker([30, 40], 'p', {...}).addTo(map);
 
 // When the marker is numeric (integer), it defines the Polygon sides.
