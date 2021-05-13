@@ -3,14 +3,14 @@
 Polygonal Markers in Leaflet map <img align="right" width="50%" src='example-map.png'>
 
 
-Disclaimer: This is not a Node.js module, but a small script intended to be copy/pasted in your code or included 
-easily in your HTML page together with [Leaflet](https://leafletjs.com/):
+Disclaimer: This is not a Node.js module, but a small script intended to be copy/pasted in your code or [included 
+easily](https://stackoverflow.com/a/18049842) in your HTML page together with [Leaflet](https://leafletjs.com/):
 ```javascript
 <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/rizac/leaflet-poly-marker/polymarker.min.js'>
 ```
-(For generating the `src` URL above, see [here](https://stackoverflow.com/a/18049842). See also the
+See also the
 [example.html file](https://github.com/rizac/leaflet-poly-marker/blob/main/example.html)
-for details) 
+for details
 
 ## Examples
 
@@ -19,10 +19,10 @@ for details)
 var map = L.map(...);
 
 // Create a Pentagon ('p') centered at [lat, lon] = [30, 40] with size in pixels
-// given as the `radius`of the enclosing circle (When missing, radius defaults to 10)
+// given as the radius of the enclosing circle (When missing, radius defaults to 10)
 var pmarker = L.polyMarker([30, 40], {marker: 'p', radius: 15, ...}).addTo(map);
         
-// You can also create PolyMarkers with thrre arguments, supplying the marker separately
+// You can also create PolyMarkers with three arguments, supplying the marker separately
 // as second argument (a missing marker will default to 's': square Polygon)
 var pmarker = L.polyMarker([30, 40], 'p', {...}).addTo(map);
 
