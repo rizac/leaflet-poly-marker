@@ -1,6 +1,6 @@
 # leaflet-poly-marker
 
-Polygonal Markers in Leaflet map <img align="right" width="42%" src='example-map.png'>
+Polygonal Markers in Leaflet map <img align="right" width="45%" src='example-map.png'>
 
 
 Disclaimer: This is not a Node.js module, but a small script intended to be copy/pasted in your code or included 
