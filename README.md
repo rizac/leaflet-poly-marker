@@ -14,10 +14,8 @@ To add PolyMarkers in JavaScript:
 // Given a Leaflet map object:
 var map = L.map(...);
 
-// Create a Pentagon ('p') centered at [lat, lon] = [30, 40]. The last argument are
-// The PolyMarker options, inherited from Polygon. In addition to them, the `radius`
-// controls the Polygon size by setting the radius in pixel of the enclosing circle,
-// the `marker` defines the type of Polygon
+// Create a Pentagon ('p') centered at [lat, lon] = [30, 40]. with size in pixel
+// given as the `radius`of the enclosing circle
 var pmarker = L.polyMarker([30, 40], {marker: 'p', radius: 10, ...}).addTo(map);
         
 // You can also supply the marker as second argument (will be merged in options).
