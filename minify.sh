@@ -5,5 +5,5 @@
 NODE_PATH="/usr/local/lib/node_modules"
 OUTFILE="./polymarker.min.js"
 echo "// (c) R. Zaccarelli (rizac@github.com)" > $OUTFILE
-terser ./polymarker.js >> $OUTFILE
+terser ./polymarker.js -c -m >> $OUTFILE
 echo "Minified polymarker.min.js"
