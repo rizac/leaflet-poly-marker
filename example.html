@@ -26,6 +26,15 @@
             border-width: 0 !important;
             background-color: transparent !important;
         }
+        button{
+            border: 0px;
+            border-radius: .5rem;
+            padding: 1rem;
+            margin: 0.2rem;
+            font-size: medium;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
     </style>
 
 
@@ -40,8 +49,8 @@
 
 <body class="parent">
     <div id="map">
-
     </div>
+    <button onclick="populateMap()">Refresh</button>
 </body>
 
 <script type="text/javascript">
@@ -59,23 +68,28 @@ var map = L.map('map', {
 })
 </script>
 
-<script type="text/javascript" src="polymarker.js"></script>
+<script type="text/javascript" src="polymarker.min.js"></script>
 
 <script type="text/javascript">
     function randomLngLat(){
+        // just a function to generate random, not too high or low, lat and longitude:
         return [Math.random() * 150 - 75, Math.random() * 300 - 150]
     }
-    // show all available markers, plus two custom polygons with 10 and 180 sides
-    var markers = Object.keys(L.PolyMarker.prototype.markers).concat([10, '180']);
-    var allPolyMarkers = [];
-    for(var marker of markers){
-        var polyMarker = L.polyMarker(randomLngLat(), {marker: marker}).bindPopup( `marker: ${marker}`);
-        allPolyMarkers.push(polyMarker);
+    // use a main layer to group all PolyMarkers (which are also subclasses of Layer).
+    // We can use LayerGroup or FeatureGroup, in this simple example any of them is ok:
+    var featureGroup = null;
+    function populateMap(){
+        if (featureGroup){
+            featureGroup.remove();
+        }
+        // show all available markers, plus two custom polygons with 10 and 180 sides
+        var markers = Object.keys(L.PolyMarker.prototype.markers).concat([10, '180']);
+        var allPolyMarkers = markers.map(marker => L.polyMarker(randomLngLat(), {marker: marker}).bindPopup( `marker: ${marker}`));
+        featureGroup = L.featureGroup(allPolyMarkers).addTo(map);
+        // zoom to markers for a better display:
+        map.fitBounds(featureGroup.getBounds());
     }
-    L.circleMarker(randomLngLat()).addTo(map);
-    var featGroup = new L.featureGroup(allPolyMarkers).addTo(map);
-    // zoom map to specified markers:
-    map.fitBounds(featGroup.getBounds());
+    populateMap();
 </script>
 
 
